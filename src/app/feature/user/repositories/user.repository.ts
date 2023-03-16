@@ -2,7 +2,7 @@ import {DatabaseConnection} from "../../../../main/database/typeorm.connection";
 import {User} from "../../../models/user.model";
 import {UserEntity} from "../../../shared/database/entities";
 import {CreateUserDTO} from "../dtos/createUser.dto";
-
+import {v4} from "uuid";
 export class UserRepository {
   private _repository = DatabaseConnection.connection.getRepository(UserEntity);
 
@@ -22,8 +22,8 @@ export class UserRepository {
     return this.mapToModel(result);
   }
 
-  public async getUserByEmail(email: string): Promise<User | null> {
-    const user = this._repository.findOne({where: {email}});
+  public async getUserByEmail(uid: string): Promise<User | null> {
+    const user = this._repository.findOne({where: {uid}});
     return user;
   }
 }

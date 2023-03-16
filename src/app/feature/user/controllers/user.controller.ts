@@ -2,6 +2,8 @@ import {Request, Response} from "express";
 import {UserRepository} from "../repositories/user.repository";
 import {CustomError} from "../../../shared/utils/errors/custom.error";
 import {CreateUserUseCase} from "../usecases/createUser.usecase";
+import {LoginUseCase} from "../usecases/loginUser.usecase";
+import {httpHelper} from "../../../shared/utils/httpHelper/http.helper";
 
 class UserController {
   // repository: UserRepository;
@@ -45,7 +47,23 @@ class UserController {
     }
 
     // criar
-    // erro 1 - já existe um usuário com esse e-mail
-    // erro 2 - erro de banco
+    // erro 1 - já existe um usuário com esse e-mail // erro 2 - erro de banco
+  }
+
+  public async loginUserControll(req: Request, res: Response) {
+    try {
+      const useCase = new LoginUseCase(new UserRepository());
+      const result = await useCase.execute(req.body);
+      if (!result) {
+        return CustomError.badRequest(
+          res,
+          "Usuario ou senha não encontrado",
+          403
+        );
+      }
+      return httpHelper.sucesso(res, result);
+    } catch (error: any) {
+      return CustomError.serverError(res, error.toString());
+    }
   }
 }
