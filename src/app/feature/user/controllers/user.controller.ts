@@ -5,7 +5,7 @@ import {CreateUserUseCase} from "../usecases/createUser.usecase";
 import {LoginUseCase} from "../usecases/loginUser.usecase";
 import {httpHelper} from "../../../shared/utils/httpHelper/http.helper";
 
-class UserController {
+export class UserController {
   // repository: UserRepository;
 
   // constructor(repository: UserRepository) {
