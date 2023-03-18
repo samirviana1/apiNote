@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {CreateTaskUseCase} from "../usecases/createTask.usecase";
 import {TaskRepository} from "../repositories/task.repository";
 import {httpHelper} from "../../../shared/utils/httpHelper/http.helper";
-import {CustomError} from "../../../shared/utils/errors/custom.error";
 
 export class TaskController {
   public static async createTask(req: Request, res: Response) {
