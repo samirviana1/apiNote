@@ -3,6 +3,7 @@ import {UserRepository} from "../repositories/user.repository";
 import * as jwt from "jsonwebtoken";
 import {appEnv} from "../../../env/app.env";
 import {LoginUserDTO} from "../dtos/loginUser.dto";
+import {CustomError} from "../../../shared/utils/errors/custom.error";
 
 export interface LoginResponceDto {
   sucess: boolean;
@@ -14,51 +15,34 @@ export interface LoginResponceDto {
 export class LoginUseCase {
   constructor(private repository: UserRepository) {}
 
-  public async execute(date: LoginUserDTO): Promise<LoginResponceDto> {
-    const user = await this.repository.getUserByEmail(date.uid);
+  public async execute(loginDto: LoginUserDTO): Promise<string> {
+    const user = await this.repository.getUserByEmail(loginDto.email);
 
     if (!user) {
-      return {
-        sucess: false,
-        message: "Usuario não encontrado",
-      };
+      throw new CustomError("E-mail ou senha incorreto(s)", 403);
     }
 
     const criptoService = new CriptoService();
 
-    const matchPass = await criptoService.comparar(
-      date.password,
-      user.password
-    );
-    const matchEmail = await criptoService.comparar(date.email, user.email);
+    const matchPass = await criptoService.comparar({
+      valor: loginDto.password,
+      hash: loginDto.password,
+    });
 
     if (!matchPass) {
-      return {
-        sucess: false,
-        message: "Senha incorreta",
-      };
-    }
-
-    if (!matchEmail) {
-      return {
-        sucess: false,
-        message: "E-mail incorreto",
-      };
+      throw new CustomError("E-mail ou senha incorreto(s)", 403);
     }
 
     const token = jwt.sign(
       {
-        //uid: user.uid
+        uid: user.uid,
       },
       appEnv.secret!,
       {
         expiresIn: "1h",
       }
     );
-    return {
-      sucess: true,
-      message: "OK",
-      token,
-    };
+
+    return token;
   }
 }

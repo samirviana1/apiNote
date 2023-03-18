@@ -6,15 +6,12 @@ export const UserValidator = (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const {name, email, password} = req.body;
-    if (!name) return CustomError.badRequest(res, "É necessario um nome!", 400);
-    if (!email)
-      return CustomError.badRequest(res, "É necessario um e-mail", 400);
-    if (!password)
-      return CustomError.badRequest(res, "É necessario um password!", 400);
-    return next();
-  } catch (error: any) {
-    return CustomError.serverError(res, error.toString());
-  }
+  const {name, email, password} = req.body;
+  if (!name) return CustomError.badRequest(res, "É necessario um nome!", 400);
+  if (!email)
+    return CustomError.badRequest(res, "É necessario um e-mail!", 400);
+  if (!password)
+    return CustomError.badRequest(res, "É necessario um password!", 400);
+
+  next();
 };

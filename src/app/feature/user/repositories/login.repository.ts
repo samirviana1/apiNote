@@ -17,6 +17,6 @@ export class LoginRepository {
   }
 
   private mapEntityToModel(entity: UserEntity) {
-    return User.create(entity.name, entity.email, entity.password);
+    return User.create(entity.uid, entity.name, entity.email, entity.password);
   }
 }

@@ -12,11 +12,15 @@ export class UserController {
   //   this.repository = repository;
   // }
 
-  public async create(req: Request, res: Response) {
+  public static async create(
+    req: Request,
+    res: Response
+  ): Promise<Record<string, any>> {
     try {
-      const {name, email, password} = req.body;
+      const {uid, name, email, password} = req.body;
 
       const userDto = {
+        uid,
         name,
         email,
         password,
@@ -25,45 +29,36 @@ export class UserController {
       const repository = new UserRepository();
       const usecase = new CreateUserUseCase(repository);
 
-      const response = await usecase.execute(userDto);
+      await usecase.execute(userDto);
 
       return res.status(201).json({
         success: true,
         message: "Usuário criado com sucesso!",
       });
     } catch (error: any) {
-      if (error instanceof CustomError) {
-        return res.status(500).json({
-          success: false,
-          message: error.message,
-        });
-      }
+      const errorContent = httpHelper.buildErrorContent(error);
 
-      return res.status(500).json({
-        success: false,
-        message:
-          "Erro interno. Por favor tente novamente ou entre em contato com nosso time.",
-      });
+      return res.status(errorContent.code).json(errorContent);
     }
-
-    // criar
-    // erro 1 - já existe um usuário com esse e-mail // erro 2 - erro de banco
   }
 
-  public async loginUserControll(req: Request, res: Response) {
+  public static async loginUserControll(
+    req: Request,
+    res: Response
+  ): Promise<Record<string, any>> {
     try {
+      const {email, password} = req.body;
+
       const useCase = new LoginUseCase(new UserRepository());
-      const result = await useCase.execute(req.body);
-      if (!result) {
-        return CustomError.badRequest(
-          res,
-          "Usuario ou senha não encontrado",
-          403
-        );
-      }
-      return httpHelper.sucesso(res, result);
+      const result = await useCase.execute({email, password});
+
+      const response = httpHelper.sucesso(result);
+
+      return res.status(response.code).json(response);
     } catch (error: any) {
-      return CustomError.serverError(res, error.toString());
+      const errorContent = httpHelper.buildErrorContent(error);
+
+      return res.status(errorContent.code).json(errorContent);
     }
   }
 }

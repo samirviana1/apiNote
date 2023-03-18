@@ -1,6 +1,6 @@
 import {Response} from "express";
 export class CustomError extends Error {
-  constructor(public message: string) {
+  constructor(public message: string, public code: number) {
     super(message);
   }
 

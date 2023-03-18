@@ -7,11 +7,12 @@ export class UserRepository {
   private _repository = DatabaseConnection.connection.getRepository(UserEntity);
 
   private mapToModel(entity: UserEntity): User {
-    return User.create(entity.name, entity.email, entity.password);
+    return User.create(entity.uid, entity.name, entity.email, entity.password);
   }
 
   public async create(user: CreateUserDTO): Promise<User> {
     const userEntity = this._repository.create({
+      uid: user.uid,
       name: user.name,
       email: user.email,
       password: user.password,
@@ -22,8 +23,8 @@ export class UserRepository {
     return this.mapToModel(result);
   }
 
-  public async getUserByEmail(uid: string): Promise<User | null> {
-    const user = this._repository.findOne({where: {uid}});
+  public async getUserByEmail(email: string): Promise<User | null> {
+    const user = await this._repository.findOne({where: {email}});
     return user;
   }
 }
