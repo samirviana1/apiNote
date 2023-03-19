@@ -13,7 +13,7 @@ export class CreateUserUseCase {
     const existUser = await this.#repository.getUserByEmail(dto.email);
 
     if (existUser) {
-      throw new CustomError("E-mail já existe!");
+      throw new CustomError("E-mail já existe!", 400);
     }
 
     await this.#repository.create(dto);

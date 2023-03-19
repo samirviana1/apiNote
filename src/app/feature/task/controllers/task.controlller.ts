@@ -19,9 +19,7 @@ export class TaskController {
     }
   }
 
-  public static async getAllTask() {}
-
-  public static async getAllUserTask() {}
+  public static async getAllUserTask(req: Request, res: Response) {}
 
   public static async updateTask() {}
 

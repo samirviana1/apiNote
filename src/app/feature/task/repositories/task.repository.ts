@@ -37,6 +37,11 @@ export class TaskRepository {
     return result;
   }
 
+  public async getTask(uid: string): Promise<Task | null> {
+    const result = await this._repository.findOne({where: {uid}});
+    return result;
+  }
+
   public async updateTask(
     uid: string,
     title: string,
