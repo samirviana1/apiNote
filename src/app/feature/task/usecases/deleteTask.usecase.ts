@@ -10,11 +10,11 @@ export class DeleteTaskUserUsecase {
     this.#repository = repository;
   }
 
-  public async execute(dto: TaskDTO): Promise<Task> {
-    const result = this.#repository.delTask(dto.uid!);
-    if (!result) {
-      throw new CustomError("erro", 404);
-    }
-    return result;
-  }
+  // public async execute(dto: TaskDTO): Promise<Task> {
+  //   const result = this.#repository.delTask(dto.uid!);
+  //   if (!result) {
+  //     throw new CustomError("erro", 404);
+  //   }
+  //   return result;
+  // }
 }

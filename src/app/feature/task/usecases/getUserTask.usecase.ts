@@ -10,11 +10,11 @@ export class GetUserTaskUsecase {
     this.#repository = repository;
   }
 
-  public async execute(dto: TaskDTO): Promise<Task> {
-    const taskIdUser = this.#repository.getTask(dto.userUid);
-    if (!taskIdUser) {
-      throw new CustomError("erro", 404);
-    }
-    return taskIdUser;
-  }
+  // public async execute(dto: TaskDTO): Promise<Task> {
+  //   const taskIdUser = this.#repository.getTask(dto.userUid);
+  //   if (!taskIdUser) {
+  //     throw new CustomError("erro", 404);
+  //   }
+  //   return taskIdUser;
+  // }
 }
