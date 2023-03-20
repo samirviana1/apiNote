@@ -12,7 +12,7 @@ export class Task {
     title: string,
     description: string
   ) {
-    this.uid = v4();
+    this.uid = uid;
     this.userUid = userUid;
     this.title = title;
     this.description = description;

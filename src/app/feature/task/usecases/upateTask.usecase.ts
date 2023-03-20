@@ -1,3 +1,4 @@
+import {title} from "process";
 import {Task} from "../../../models";
 import {CustomError} from "../../../shared/utils/errors/custom.error";
 import {TaskDTO} from "../dtos/createTask.dto";
@@ -11,19 +12,14 @@ export class UpdateTaskUsecase {
   }
 
   public async execute(dto: TaskDTO): Promise<Task> {
-    const tesk = await this.#repository.getTask(dto.uid!);
-    if (!tesk) {
-      throw new CustomError("erro", 404);
-    }
-    const result = await this.#repository.updateTask(
-      tesk.title,
-      tesk.description,
-      tesk.uid
+    const taskUpdate = await this.#repository.updateTask(
+      dto.uid!,
+      dto.title,
+      dto.description
     );
-
-    if (!result) {
-      throw new CustomError("erro", 404);
+    if (!taskUpdate) {
+      throw new CustomError("Erro sua anotação não foi encontrada!", 404);
     }
-    return result;
+    return taskUpdate;
   }
 }
