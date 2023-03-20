@@ -5,6 +5,7 @@ import {httpHelper} from "../../../shared/utils/httpHelper/http.helper";
 import {GetAllTaskUserUsecase} from "../usecases/getUserTask.usecase";
 import {UpdateTaskUsecase} from "../usecases/upateTask.usecase";
 import {DeleteTaskUserUsecase} from "../usecases/deleteTask.usecase";
+import {TaskDTO} from "../dtos/createTask.dto";
 
 export class TaskController {
   public static async createTask(req: Request, res: Response) {
@@ -38,12 +39,19 @@ export class TaskController {
 
   public static async updateTask(req: Request, res: Response) {
     try {
-      const {uid, title, description} = req.body;
+      const {uid, title, description, userUid} = req.body;
+      const dto = {
+        uid: uid as string,
+        userUid: userUid as string,
+        title: title as string,
+        description: description as string,
+      };
+
       const repository = new TaskRepository();
       const usecase = new UpdateTaskUsecase(repository);
-      //const result = await usecase.execute({uid, title, description});
-      //const response = httpHelper.sucesso(result);
-      //return res.status(response.code).json(response);
+      const result = await usecase.execute(dto);
+      const response = httpHelper.sucesso(result);
+      return res.status(response.code).json(response);
     } catch (error: any) {
       const response = httpHelper.buildErrorContent(error);
       return res.status(response.code).json(response);
