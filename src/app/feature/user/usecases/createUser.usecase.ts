@@ -1,3 +1,4 @@
+import {v4} from "uuid";
 import {CustomError} from "../../../shared/utils/errors/custom.error";
 import {CreateUserDTO} from "../dtos/createUser.dto";
 import {UserRepository} from "../repositories/user.repository";
@@ -10,6 +11,7 @@ export class CreateUserUseCase {
   }
 
   public async execute(dto: CreateUserDTO): Promise<boolean> {
+    dto.uid = v4();
     const existUser = await this.#repository.getUserByEmail(dto.email);
 
     if (existUser) {
