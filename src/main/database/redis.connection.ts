@@ -14,4 +14,12 @@ export class RedisConnection {
       });
     }
   }
+
+  public static get connection() {
+    if (!this._connection) {
+      throw new Error("Redis nao conectado");
+    }
+
+    return this._connection;
+  }
 }
