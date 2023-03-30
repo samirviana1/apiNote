@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  Column,
 } from "typeorm";
 import {v4} from "uuid";
 
@@ -13,15 +14,15 @@ export abstract class DefaultEntity {
   @PrimaryColumn()
   uid!: string;
 
-  @CreateDateColumn("created_at")
+  @Column({name: "created_at", type: "timestamp"})
   createdAt!: Date;
 
-  @UpdateDateColumn("updated_at")
+  @Column({name: "updated_at", type: "timestamp"})
   updatedAt?: Date | null;
 
   @BeforeInsert()
   beforeCreate() {
-    this.uid = v4();
+    //this.uid = v4();
     this.createdAt = new Date();
   }
 
