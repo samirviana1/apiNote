@@ -1,5 +1,6 @@
 import {DataSource} from "typeorm";
 import "dotenv/config";
+import {appEnv} from "src/app/env/app.env";
 import {CreateTableUsers1677785802931} from "src/app/shared/database/migrations/1677785802931-CreateTableUsers";
 import {CreateTableTasks1677785941823} from "src/app/shared/database/migrations/1677785941823-CreateTableTasks";
 import {
@@ -10,8 +11,13 @@ import {
 
 export default new DataSource({
   type: "postgres",
-  url: process.env.DATABASE_URL,
+  url: "postgres://fzoxqokl:aJ-scb64qIlfzckvAA1OoBXwSycD6PTr@motty.db.elephantsql.com/fzoxqokl", // appEnv.dbUrl,
+  schema: "public",
   synchronize: false,
+  logging: false,
   entities: [DefaultEntity, TaskEntity, UserEntity],
   migrations: [CreateTableUsers1677785802931, CreateTableTasks1677785941823],
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });

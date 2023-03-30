@@ -1,11 +1,15 @@
 import {Response} from "express";
 import {createServer} from "../config/server.config";
 import "dotenv/config";
+import {makeRoutes} from "../config/routes.config";
+import {appEnv} from "src/app/env/app.env";
 
 export const runServer = () => {
   const app = createServer();
 
-  app.listen(process.env.PORT, () => {
-    console.log(`🤘 - Servidor rodando na porta ${process.env.PORT}`);
+  //makeRoutes(app);
+
+  app.listen(appEnv.port, () => {
+    console.log(`🤘 - Servidor rodando na porta ${appEnv.port}`);
   });
 };
