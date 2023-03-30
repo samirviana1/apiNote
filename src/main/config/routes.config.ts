@@ -1,5 +1,5 @@
 import {Express, Request, Response} from "express";
-import {userRoutes} from "../../app/feature/user/routes";
+import {loginRoute, userRoutes} from "../../app/feature/user/routes";
 
 export const makeRoutes = (app: Express) => {
   app.get("/", (req: Request, res: Response) => {
@@ -10,4 +10,5 @@ export const makeRoutes = (app: Express) => {
   });
 
   app.use("/users", userRoutes);
+  app.use("/login", loginRoute);
 };
