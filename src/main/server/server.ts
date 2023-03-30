@@ -2,7 +2,7 @@ import {Response} from "express";
 import {createServer} from "../config/server.config";
 import "dotenv/config";
 import {makeRoutes} from "../config/routes.config";
-import {appEnv} from "src/app/env/app.env";
+import {appEnv} from "../../app/env/app.env";
 
 export const runServer = () => {
   const app = createServer();
