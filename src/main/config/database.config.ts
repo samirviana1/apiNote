@@ -11,7 +11,7 @@ import {
 
 export default new DataSource({
   type: "postgres",
-  url: "postgres://fzoxqokl:aJ-scb64qIlfzckvAA1OoBXwSycD6PTr@motty.db.elephantsql.com/fzoxqokl", // appEnv.dbUrl,
+  url: appEnv.dbUrl,
   schema: "public",
   synchronize: false,
   logging: false,
