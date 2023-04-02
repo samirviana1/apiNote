@@ -7,7 +7,7 @@ import {appEnv} from "../../app/env/app.env";
 export const runServer = () => {
   const app = createServer();
 
-  //makeRoutes(app);
+  makeRoutes(app);
 
   app.listen(appEnv.port, () => {
     console.log(`🤘 - Servidor rodando na porta ${appEnv.port}`);
