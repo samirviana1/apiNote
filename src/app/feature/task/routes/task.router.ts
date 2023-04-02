@@ -13,12 +13,16 @@ export const taskRoutes = () => {
     [taskValidator, authMiddleware],
     TaskController.createTask
   );
-  route.get("/getUsers", [authMiddleware], TaskController.getAllUserTask);
-  route.post(
+  route.get(
+    "/getTaskUsers/:userUid",
+    [authMiddleware],
+    TaskController.getAllUserTask
+  );
+  route.put(
     "updateTask",
     [authMiddleware, taskDadosUpdate],
     TaskController.updateTask
   );
-  route.delete("deleteTask", [authMiddleware], TaskController.deleteTask);
+  route.delete("deleteTask/:id", [authMiddleware], TaskController.deleteTask);
   return route;
 };
