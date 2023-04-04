@@ -13,11 +13,11 @@ export class DeleteTaskUserUsecase {
     this.#cacheRepository = new CacheRepository();
   }
 
-  public async execute(id: any): Promise<void> {
+  public async execute(uid: string): Promise<void> {
     const taskList = (await this.#cacheRepository.get("TASK_LIST")) ?? [];
-    const deleteTask = taskList.filter((task: any) => task.id === id);
-    await this.#cacheRepository.set("TASK_LIST", deleteTask);
-    const deleteTaskUser = await this.#repository.delTask(id);
+    //const deleteTask = taskList.filter((task) => task.uid === uid);
+    //await this.#cacheRepository.set("TASK_LIST", deleteTask);
+    const deleteTaskUser = await this.#repository.delTask(uid);
     return deleteTaskUser;
   }
 }

@@ -43,9 +43,9 @@ export class TaskRepository {
   }
 
   public async updateTask(
-    uid: string,
     title: string,
-    description: string
+    description: string,
+    uid?: string
   ): Promise<Task | undefined> {
     const task = await this._repository.findOne({where: {uid}});
     if (!task) {

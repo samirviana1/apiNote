@@ -63,7 +63,7 @@ export class TaskController {
       const {uid} = req.params;
       const repository = new TaskRepository();
       const usecase = new DeleteTaskUserUsecase(repository);
-      const result = await usecase.execute({uid});
+      const result = await usecase.execute(uid);
       const response = httpHelper.sucesso(result);
       return res.status(response.code).json(response);
     } catch (error: any) {
