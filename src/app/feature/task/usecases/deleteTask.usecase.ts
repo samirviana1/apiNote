@@ -14,9 +14,7 @@ export class DeleteTaskUserUsecase {
   }
 
   public async execute(uid: string): Promise<void> {
-    const taskList = (await this.#cacheRepository.get("TASK_LIST")) ?? [];
-    //const deleteTask = taskList.filter((task) => task.uid === uid);
-    //await this.#cacheRepository.set("TASK_LIST", deleteTask);
+    await this.#cacheRepository.del(`task${uid}`);
     const deleteTaskUser = await this.#repository.delTask(uid);
     return deleteTaskUser;
   }
